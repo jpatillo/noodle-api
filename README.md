@@ -1,8 +1,6 @@
-# Garage Server
+# Noodle Backend
 
-The backend for our garage door opener.
-
-Why do we need a backend? Security mostly. Originally there was simply a Raspberry Pi Zero W, a Mosquitto broker, and an Android app. The Android app published a request through Mosquitto to have the Raspberry Pi activate a relay that signaled the garage door to open.
+The backend for the Noodle project directly handles communications from/to endpoint devices. Messages sent from devices are received by the backend and properly handled to store data and notify users.
 
 ## Technologies
 
