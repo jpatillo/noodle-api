@@ -14,5 +14,4 @@ The backend for the Noodle project directly handles communications from/to endpo
 - Device registration as the only method of creating a device document in the database
 - Find out the lifecycle of a MQTT client.
 - Save logs to a database for debugging.
-- Save telemetry to a database and allow it to be read from the Android app
 - User accounts with access to specific devices.
