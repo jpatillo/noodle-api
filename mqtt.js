@@ -1,6 +1,7 @@
 const mqtt = require('mqtt');
 var MQTTPattern = require("mqtt-pattern");
 var firebase = require('./firebase-service');
+var moment = require('moment')
 
 const host = process.env.MQTTHOST
 const client = process.env.NOODLEMQTTID
@@ -40,14 +41,17 @@ mqttClient.on('message', function (topic, message) {
         //TODO: some kind of device validation
         
         // Update only
-        let docRef = firebase.firestore.collection("devices").doc(telemetry.id);
+        //let docRef = firebase.firestore.collection("devices").doc(telemetry.id);
+
+        let docRef = firebase.firestore.collection("telemetry").doc(telemetry.id).collection(moment().format('YYYYMM')).doc(moment().format('DD'))
+        let timekey = moment().format('HHmm')
         //TODO: error checks
         var msg = JSON.parse(message.toString());
         var data = {}
         for(var c=0;c<msg.length;c++){
             data[msg[c].id] = {...msg[c],createdAt: firebase.adminFirestore.FieldValue.serverTimestamp()}
         }
-        docRef.update({telemetry:data});
+        docRef.set({[timekey]:data},{ merge: true });
     }
 
 });
