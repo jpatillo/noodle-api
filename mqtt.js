@@ -2,6 +2,9 @@ const mqtt = require('mqtt');
 var MQTTPattern = require("mqtt-pattern");
 var firebase = require('./firebase-service');
 var moment = require('moment')
+const {Client} = require('pg')
+
+const postgres = new Client()
 
 const host = process.env.MQTTHOST
 const client = process.env.NOODLEMQTTID
@@ -9,6 +12,7 @@ const username = process.env.NOODLEMQTTUSER
 const password = process.env.NOODLEMQTTPASS
 
 var mqttClient = mqtt.connect(host, {clientId:client, username:username, password:password});
+postgres.connect()
 
 const topic_prefix = "noodle/+/";
 
