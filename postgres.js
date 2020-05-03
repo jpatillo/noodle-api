@@ -27,6 +27,18 @@ function saveTelemetry(deviceId,data={}){
 
     console.log('query ',qString)
     
+
+    postgres.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name")
+    .then(res => console.log(res))
+    .catch(err => {
+        console.log("Error on INSERT ",err)
+        setImmediate(() => {
+            throw err
+        })
+    }
+    )
+
+    /*
     postgres.query(qString)
     .then(res => console.log('Inserted row',res))
     .catch(err => {
@@ -36,7 +48,7 @@ function saveTelemetry(deviceId,data={}){
         })
     }
     )
-    
+    */
 }
 
 exports.saveTelemetry = saveTelemetry;
