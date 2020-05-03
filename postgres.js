@@ -2,7 +2,10 @@ var firebase    = require('./firebase-service');
 var moment      = require('moment')
 const {Pool}    = require('pg')
 
-const postgres = new Pool()
+const postgres = new Pool({
+    user:       process.env.PGUSER,
+    database:   process.env.PGDATABASE
+})
 
 /**
  * 
@@ -16,16 +19,21 @@ function saveTelemetry(deviceId,data={}){
     var keys = Object.keys(data).map(function(k){return k}).join(",");
     var values = Object.keys(data).map(function(k){return data[k]}).join(",");
 
-    console.log('telemetry keys: ',keys)
-    console.log('telemetry values: ',values)
+    //console.log('telemetry keys: ',keys)
+    //console.log('telemetry values: ',values)
 
+    var qString = `INSERT INTO telemetry (${keys}) VALUES (${values})`
+
+    console.log('query ',qString)
     
-    postgres.query(`INSERT INTO telemetry (${keys}) VALUES (${values})`)
+    postgres.query(qString)
     .then(res => console.log('Inserted row',res))
-    .catch(err =>
+    .catch(err => {
+        console.log("Error on INSERT ",err)
         setImmediate(() => {
             throw err
         })
+    }
     )
     
 }
