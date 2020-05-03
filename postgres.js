@@ -31,10 +31,7 @@ function saveTelemetry(deviceId,data={}){
 
     console.log('query ',qString)
     
-
-
-
-
+    console.log(postgres)
 
     postgres.query(qString)
     .then(res => console.log('Inserted row',res))
@@ -43,8 +40,7 @@ function saveTelemetry(deviceId,data={}){
         setImmediate(() => {
             throw err
         })
-    }
-    )
+    })
     
 }
 
