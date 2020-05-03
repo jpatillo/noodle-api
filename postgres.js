@@ -4,11 +4,13 @@ const {Pool}    = require('pg')
 
 const user = process.env.PGUSER
 const db = process.env.PGDATABASE
+const password = process.env.PGPASSWORD
 
 const postgres = new Pool({
     host:       'localhost',
     user:       user,
-    database:   db
+    database:   db,
+    password:   password
 })
 
 /**
@@ -29,12 +31,14 @@ function saveTelemetry(deviceId,data={}){
 
     //var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`
 
-    var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa');"
+    var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa')"
     
     postgres
-  .query(qString, [])
-  .then(res => console.log(res.rows[0].name)) // brianc
-  .catch(err => console.error('Error executing query', err.stack))
+  .query(qString, (err, res) => {
+    console.log(err, res);
+    pool.end();
+    }
+  )
     
 }
 
