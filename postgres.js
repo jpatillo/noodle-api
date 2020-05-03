@@ -27,12 +27,10 @@ function saveTelemetry(deviceId,data={}){
     //console.log('telemetry keys: ',keys)
     //console.log('telemetry values: ',values)
 
-    var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`
+    //var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`
 
-    console.log('query ',qString)
+    var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa');"
     
-    console.log(postgres)
-
     postgres.query(qString)
     .then(res => console.log('Inserted row',res))
     .catch(err => {
