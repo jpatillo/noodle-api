@@ -31,17 +31,10 @@ function saveTelemetry(deviceId,data={}){
 
     var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa');"
     
-    postgres.query(qString)
-    .then(res => console.log('Inserted row',res))
-    .catch(err => {
-        console.log("Error on INSERT ",err)
-        setImmediate(() => {
-            throw err
-        })
-    })
-    .finally(()=>{
-        console.log("The query was at least called...")
-    })
+    pool
+  .query(qString, [])
+  .then(res => console.log(res.rows[0].name)) // brianc
+  .catch(err => console.error('Error executing query', err.stack))
     
 }
 
