@@ -31,7 +31,7 @@ function saveTelemetry(deviceId,data={}){
 
     var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa');"
     
-    pool
+    postgres
   .query(qString, [])
   .then(res => console.log(res.rows[0].name)) // brianc
   .catch(err => console.error('Error executing query', err.stack))
