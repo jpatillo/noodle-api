@@ -33,12 +33,21 @@ function saveTelemetry(deviceId,data={}){
 
     var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa')"
     
-    postgres
-  .query(qString, (err, res) => {
-    console.log(err, res);
-    pool.end();
-    }
-  )
+
+    postgres.connect()
+    .then(client => {
+        console.log("connected")
+        return client.query('SELECT * FROM cars WHERE id = $1', [1])
+            .then(res => {
+                client.release();
+                console.log(res.rows[0]);
+            })
+            .catch(e => {
+                client.release();
+                console.log(e.stack);
+            })
+  }).finally(() => postgres.end());
+
     
 }
 
