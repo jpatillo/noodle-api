@@ -8,8 +8,10 @@ const postgres = new Pool()
  * 
  * @param {*} data 
  */
-function saveTelemetry(data){
+function saveTelemetry(deviceId,data={}){
     //TODO validate data.sensor_id and data.device_id
+
+    data['device_id'] = deviceId
 
     var keys = Object.keys(data).map(function(k){return k}).join(",");
     var values = Object.keys(data).map(function(k){return data[k]}).join(",");

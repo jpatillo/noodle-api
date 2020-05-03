@@ -57,7 +57,7 @@ mqttClient.on('message', function (topic, message) {
 
         var msg = JSON.parse(message.toString());
         for(var c=0;c<msg.length;c++){
-            postgres.saveTelemetry(msg[c])
+            postgres.saveTelemetry(telemetry.id,msg[c])
         }
 
     }
