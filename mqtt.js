@@ -1,10 +1,8 @@
-const mqtt = require('mqtt');
+const mqtt      = require('mqtt');
 var MQTTPattern = require("mqtt-pattern");
-var firebase = require('./firebase-service');
-var moment = require('moment')
-const {Client} = require('pg')
-
-const postgres = new Client()
+var firebase    = require('./firebase-service');
+var moment      = require('moment')
+var postgres    = required('./postgres')
 
 const host = process.env.MQTTHOST
 const client = process.env.NOODLEMQTTID
@@ -12,7 +10,6 @@ const username = process.env.NOODLEMQTTUSER
 const password = process.env.NOODLEMQTTPASS
 
 var mqttClient = mqtt.connect(host, {clientId:client, username:username, password:password});
-postgres.connect()
 
 const topic_prefix = "noodle/+/";
 
@@ -39,7 +36,6 @@ mqttClient.on('connect', () => {
 mqttClient.on('message', function (topic, message) {
     console.log(message.toString());
 
-
     var telemetry = MQTTPattern.exec("noodle/+id/telemetry",topic);
     if(telemetry){
         //TODO: some kind of device validation
@@ -47,6 +43,7 @@ mqttClient.on('message', function (topic, message) {
         // Update only
         //let docRef = firebase.firestore.collection("devices").doc(telemetry.id);
 
+        /* Save to firebase
         let docRef = firebase.firestore.collection("telemetry").doc(telemetry.id).collection(moment().format('YYYYMM')).doc(moment().format('DD'))
         let timekey = moment().format('HHmm')
         //TODO: error checks
@@ -56,6 +53,13 @@ mqttClient.on('message', function (topic, message) {
             data[msg[c].id] = {...msg[c],createdAt: firebase.adminFirestore.FieldValue.serverTimestamp()}
         }
         docRef.set({[timekey]:data},{ merge: true });
+        */
+
+        var msg = JSON.parse(message.toString());
+        for(var c=0;c<msg.length;c++){
+            postgres.saveTelemetry(msg[c])
+        }
+
     }
 
 });
