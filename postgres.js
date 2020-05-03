@@ -27,27 +27,15 @@ function saveTelemetry(deviceId,data={}){
     //console.log('telemetry keys: ',keys)
     //console.log('telemetry values: ',values)
 
-    var qString = `INSERT INTO telemetry (${keys}) VALUES (${values})`
+    var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`
 
     console.log('query ',qString)
     
 
 
-    postgres.connect((err, client, release) => {
-        if (err) {
-          return console.error('Error acquiring client', err.stack)
-        }
-        client.query('SELECT NOW()', (err, result) => {
-          release()
-          if (err) {
-            return console.error('Error executing query', err.stack)
-          }
-          console.log(result.rows)
-        })
-      })
 
 
-    /*
+
     postgres.query(qString)
     .then(res => console.log('Inserted row',res))
     .catch(err => {
@@ -57,7 +45,7 @@ function saveTelemetry(deviceId,data={}){
         })
     }
     )
-    */
+    
 }
 
 exports.saveTelemetry = saveTelemetry;
