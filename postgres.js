@@ -2,9 +2,13 @@ var firebase    = require('./firebase-service');
 var moment      = require('moment')
 const {Pool}    = require('pg')
 
+const user = process.env.PGUSER
+const db = process.env.PGDATABASE
+
 const postgres = new Pool({
-    user:       process.env.PGUSER,
-    database:   process.env.PGDATABASE
+    host:       'localhost',
+    user:       user,
+    database:   db
 })
 
 /**
@@ -28,15 +32,20 @@ function saveTelemetry(deviceId,data={}){
     console.log('query ',qString)
     
 
-    postgres.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name")
-    .then(res => console.log(res))
-    .catch(err => {
-        console.log("Error on INSERT ",err)
-        setImmediate(() => {
-            throw err
+
+    pool.connect((err, client, release) => {
+        if (err) {
+          return console.error('Error acquiring client', err.stack)
+        }
+        client.query('SELECT NOW()', (err, result) => {
+          release()
+          if (err) {
+            return console.error('Error executing query', err.stack)
+          }
+          console.log(result.rows)
         })
-    }
-    )
+      })
+
 
     /*
     postgres.query(qString)
