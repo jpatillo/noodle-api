@@ -2,7 +2,7 @@ const mqtt      = require('mqtt');
 var MQTTPattern = require("mqtt-pattern");
 var firebase    = require('./firebase-service');
 var moment      = require('moment')
-var postgres    = required('./postgres')
+var postgres    = require('./postgres')
 
 const host = process.env.MQTTHOST
 const client = process.env.NOODLEMQTTID
