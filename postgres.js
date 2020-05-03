@@ -46,7 +46,9 @@ function saveTelemetry(deviceId,data={}){
                 client.release();
                 console.log(e.stack);
             })
-  }).finally(() => {postgres.end();console.log("working?")});
+  })
+  .catch(e => {console.log("major error here!")})
+  .finally(() => {postgres.end();console.log("working?")});
 
     
 }
