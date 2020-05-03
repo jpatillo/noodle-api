@@ -19,7 +19,7 @@ function saveTelemetry(deviceId,data={}){
     console.log('telemetry keys: ',keys)
     console.log('telemetry values: ',values)
 
-    /*
+    
     postgres.query(`INSERT INTO telemetry (${keys}) VALUES (${values})`)
     .then(res => console.log('Inserted row',res))
     .catch(err =>
@@ -27,7 +27,7 @@ function saveTelemetry(deviceId,data={}){
             throw err
         })
     )
-    */
+    
 }
 
 exports.saveTelemetry = saveTelemetry;
