@@ -39,6 +39,9 @@ function saveTelemetry(deviceId,data={}){
             throw err
         })
     })
+    .finally(()=>{
+        console.log("The query was at least called...")
+    })
     
 }
 
