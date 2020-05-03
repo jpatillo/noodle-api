@@ -33,7 +33,7 @@ function saveTelemetry(deviceId,data={}){
     
 
 
-    pool.connect((err, client, release) => {
+    postgres.connect((err, client, release) => {
         if (err) {
           return console.error('Error acquiring client', err.stack)
         }
