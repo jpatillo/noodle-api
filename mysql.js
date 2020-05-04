@@ -36,6 +36,8 @@ function saveTelemetry(deviceId,data={}){
 
     var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`    
 
+    console.log(qString)
+
     pool.query(qString, function (error, results, fields) {
         if (error) throw error;
         //console.log('The solution is: ', results);
