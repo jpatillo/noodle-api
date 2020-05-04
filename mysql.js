@@ -5,13 +5,14 @@ var mysql      = require('mysql');
 const user = process.env.NOODLEMYSQLUSER
 const db = process.env.NOODLEMYSQLDATABASE
 const password = process.env.NOODLEMYSQLPASSWORD
+const socket = process.env.NOODLEMYSQLSOCKET
 
 var pool  = mysql.createPool({
     connectionLimit : 10,
-    host            : 'localhost',
-    user            : user,
-    password        : password,
-    database        : db
+    socketPath  : socket,
+    user        : user,
+    password    : password,
+    database    : db
   });
 
 
