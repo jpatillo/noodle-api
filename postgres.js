@@ -7,7 +7,7 @@ const db = process.env.PGDATABASE
 const password = process.env.PGPASSWORD
 
 const postgres = new Pool({
-    host:       `postgresql://${user}:${password}@localhost/${database}`,
+    host:       `postgresql://${user}:${password}@localhost/${db}`,
     user:       user,
     database:   db,
     password:   password
