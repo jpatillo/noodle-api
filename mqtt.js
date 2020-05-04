@@ -2,7 +2,7 @@ const mqtt      = require('mqtt');
 var MQTTPattern = require("mqtt-pattern");
 var firebase    = require('./firebase-service');
 var moment      = require('moment')
-var postgres    = require('./postgres')
+var mysql       = require('./mysql')
 
 const host = process.env.MQTTHOST
 const client = process.env.NOODLEMQTTID
@@ -57,7 +57,7 @@ mqttClient.on('message', function (topic, message) {
 
         var msg = JSON.parse(message.toString());
         for(var c=0;c<msg.length;c++){
-            postgres.saveTelemetry(telemetry.id,msg[c])
+            mysql.saveTelemetry(telemetry.id,msg[c])
         }
 
     }
