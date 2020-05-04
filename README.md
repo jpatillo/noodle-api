@@ -8,6 +8,7 @@ The backend for the Noodle project directly handles communications from/to endpo
   - express
 - firebase
 - MQTT
+- mySQL
 
 ## TODO
 
@@ -18,26 +19,27 @@ The backend for the Noodle project directly handles communications from/to endpo
 
 ## Database
 
-PostgreSQL - Mostly used for recording telemetry.
-role: noodle
+mySQL - Mostly used for recording telemetry.
 
 ```SQL
 CREATE TABLE devices (
-  id SERIAL   PRIMARY KEY,
-  created_at  TIMESTAMPTZ DEFAULT CURRENT_DATE,
+  id          INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   device_id   VARCHAR(15) NOT NULL UNIQUE
-);
+) AUTO_INCREMENT = 1;
 ```
 
+TODO methodology for creating new telemetry tables periodically so the sizes don't get too unwieldy.
+
 ```SQL
-CREATE TABLE telemetry (
-  id SERIAL   PRIMARY KEY,
-  created_at  TIMESTAMPTZ DEFAULT CURRENT_DATE,
+CREATE TABLE noodle.telemetry (
+  id          INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   sensor_id   VARCHAR(15) NOT NULL,
   device_id   VARCHAR(15) NOT NULL,
-  data1       VARCHAR(20),
-  data2       VARCHAR(20),
-  data3       VARCHAR(20),
-  device_time TIMESTAMPTZ  
-);
+  active      BOOLEAN,
+  temperature NUMERIC(6,3),
+  humidity    NUMERIC(7,3),
+  device_time TIMESTAMP  
+) AUTO_INCREMENT = 1;
 ```
