@@ -25,8 +25,10 @@ var pool  = mysql.createPool({
 function saveTelemetry(deviceId,data={}){
     //TODO validate data.sensor_id and data.device_id
 
+    // Make sure text fields have quotes.
     data['device_id'] = `\'${deviceId}\'`
     data['sensor_id'] = `\'${data['sensor_id']}\'`
+    data['device_time'] = `\'${data['device_time']}\'`
 
     var keys = Object.keys(data).map(function(k){return k}).join(",");
     var values = Object.keys(data).map(function(k){return data[k]}).join(",");
