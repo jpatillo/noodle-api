@@ -9,7 +9,7 @@ const socket = process.env.NOODLEMYSQLSOCKET
 
 var pool  = mysql.createPool({
     connectionLimit : 10,
-    socketPath  : socket,
+   // socketPath  : socket,
     user        : user,
     password    : password,
     database    : db
