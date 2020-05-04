@@ -34,7 +34,7 @@ mqttClient.on('connect', () => {
 // When a message arrives, console.log it
 // NOTE message is a buffer, not a string or (json) object
 mqttClient.on('message', function (topic, message) {
-    console.log(message.toString());
+    //console.log(message.toString());
 
     var telemetry = MQTTPattern.exec("noodle/+id/telemetry",topic);
     if(telemetry){

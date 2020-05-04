@@ -38,7 +38,7 @@ function saveTelemetry(deviceId,data={}){
 
     pool.query(qString, function (error, results, fields) {
         if (error) throw error;
-        console.log('The solution is: ', results[0].solution);
+        //console.log('The solution is: ', results);
       });
 
     
