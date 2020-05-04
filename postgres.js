@@ -7,7 +7,7 @@ const db = process.env.PGDATABASE
 const password = process.env.PGPASSWORD
 
 const postgres = new Pool({
-    host:       'localhost',
+    host:       `postgresql://${user}:${password}@localhost/${database}`,
     user:       user,
     database:   db,
     password:   password
@@ -31,13 +31,13 @@ function saveTelemetry(deviceId,data={}){
 
     //var qString = `INSERT INTO telemetry (${keys}) VALUES (${values});`
 
-    var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES ('42424fsfa',1,'fsaf3rsfafa')"
+    var qString = "INSERT INTO telemetry (sensor_id,active,device_id) VALUES (42424fsfa,1,fsaf3rsfafa)"
     
 
     postgres.connect()
     .then(client => {
         console.log("connected")
-        return client.query('SELECT * FROM cars WHERE id = $1', [1])
+        return client.query(qString, [1])
             .then(res => {
                 client.release();
                 console.log(res.rows[0]);
